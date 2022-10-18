@@ -1,3 +1,4 @@
+use std::cmp::Ordering;
 use quick_xml::se::to_string;
 use serde::Serialize;
 
@@ -59,6 +60,29 @@ pub struct LastUpdated {
 pub struct Version {
     #[serde(rename = "$value")]
     pub version: String,
+}
+
+impl PartialOrd for Version {
+    fn partial_cmp(&self, other: &Self) -> Option<Ordering> {
+        String::partial_cmp(&self.version, &other.version)
+    }
+
+    fn lt(&self, other: &Self) -> bool {
+        String::lt(&self.version, &other.version)
+
+    }
+
+    fn le(&self, other: &Self) -> bool {
+        String::le(&self.version, &other.version)
+    }
+
+    fn gt(&self, other: &Self) -> bool {
+        String::gt(&self.version, &other.version)
+    }
+
+    fn ge(&self, other: &Self) -> bool {
+        String::ge(&self.version, &other.version)
+    }
 }
 
 pub fn get_xml(metadata: Metadata) -> String {
