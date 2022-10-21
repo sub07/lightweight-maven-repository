@@ -1,0 +1,39 @@
+refresh_rate: 10 seconds
+
+appenders:
+  console:
+    kind: console
+    encoder:
+      pattern: "{d(%Y-%m-%d %H:%M:%S)} {l} {t} - {m}{n}"
+  request:
+    kind: file
+    path: "log/request.log"
+    encoder:
+      pattern: "{d(%Y-%m-%d %H:%M:%S)} {l} {t} - {m}{n}"
+  business:
+    kind: file
+    path: "log/business.log"
+    encoder:
+      pattern: "{d(%Y-%m-%d %H:%M:%S)} {l} {t} - {m}{n}"
+
+root:
+  level: info
+  appenders:
+    - console
+
+loggers:
+  lightweight_maven_repository::middleware:
+    level: info
+    additive: true
+    appenders:
+      - request
+  lightweight_maven_repository::handler:
+    level: info
+    additive: true
+    appenders:
+      - business
+  lightweight_maven_repository::repo:
+    level: info
+    additive: true
+    appenders:
+      - business

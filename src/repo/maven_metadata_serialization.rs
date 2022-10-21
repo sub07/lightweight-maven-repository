@@ -1,4 +1,5 @@
 use std::cmp::Ordering;
+
 use quick_xml::se::to_string;
 use serde::Serialize;
 
@@ -69,7 +70,6 @@ impl PartialOrd for Version {
 
     fn lt(&self, other: &Self) -> bool {
         String::lt(&self.version, &other.version)
-
     }
 
     fn le(&self, other: &Self) -> bool {
@@ -85,7 +85,7 @@ impl PartialOrd for Version {
     }
 }
 
-pub fn get_xml(metadata: Metadata) -> String {
+pub fn serialize_xml(metadata: Metadata) -> String {
     let xml = to_string(&metadata).expect("should work");
     format!(r#"<?xml version="1.0" encoding="UTF-8"?>{xml}"#)
 }
