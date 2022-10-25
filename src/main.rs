@@ -1,12 +1,12 @@
 use crate::error::{Error, Result};
-use crate::repo::RepoService;
+use crate::service::repo::RepoService;
 
 mod error;
-mod repo;
 mod handler;
 mod middleware;
 mod model;
 mod response_utils;
+mod service;
 
 fn main() -> Result<()> {
     log4rs::init_file(

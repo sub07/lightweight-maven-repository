@@ -8,6 +8,7 @@ pub enum Error {
     ArtifactOverwrite(String),
     MavenMetadataCreation(String),
     RequestDataExtraction(String),
+    AuthenticationError,
 }
 
 impl From<io::Error> for Error {

@@ -5,13 +5,12 @@ use std::time::SystemTime;
 use time::{format_description, OffsetDateTime};
 
 use crate::error::{Error, Result};
-use crate::repo::conf::Conf;
-use crate::repo::maven_metadata_serialization::{ArtifactId, GroupId, LastUpdated, Latest, Metadata, Release, serialize_xml, Version, Versioning, Versions};
+use crate::service::conf::{Conf, User};
+use crate::service::repo::maven_metadata_serialization::{ArtifactId, GroupId, LastUpdated, Latest, Metadata, Release, serialize_xml, Version, Versioning, Versions};
 
-mod conf;
 mod maven_metadata_serialization;
 
-#[derive(Clone)]
+#[derive(Clone, Debug)]
 pub struct RepoService {
     conf: Conf,
 }
@@ -23,6 +22,10 @@ impl RepoService {
         Ok(RepoService {
             conf: Conf::from_file(config_file_path)?,
         })
+    }
+
+    pub fn authenticate(&self, user: User) -> Result<()> {
+        if self.conf.users.contains(&user) { Ok(()) } else { Err(Error::AuthenticationError) }
     }
 
     pub fn write_artifact<D: AsRef<[u8]>>(&self, artifact_url: String, data: D) -> Result<()> {

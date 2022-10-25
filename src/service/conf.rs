@@ -6,8 +6,15 @@ use serde::Deserialize;
 use crate::error::{Error, Result};
 
 #[derive(Deserialize, Debug, PartialEq, Clone)]
+pub struct User {
+    pub user: String,
+    pub password: String,
+}
+
+#[derive(Deserialize, Debug, PartialEq, Clone)]
 pub struct Conf {
     pub repo_path: String,
+    pub users: Vec<User>,
 }
 
 impl Conf {
@@ -23,6 +30,7 @@ impl Conf {
 #[cfg(test)]
 mod tests {
     use crate::repo::conf::Conf;
+    use crate::service::conf::Conf;
 
     #[test]
     fn test_import_config_file_ok() {

@@ -1,8 +1,8 @@
 use rouille::{Request, Response};
 
 use crate::handler::{extract_data_from_request, handle_error};
-use crate::repo::RepoService;
 use crate::response_utils;
+use crate::service::repo::RepoService;
 
 pub fn handle(request: &Request, repo: RepoService) -> Response {
     let data = match extract_data_from_request(request) {

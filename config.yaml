@@ -1,1 +1,8 @@
 repo_path: repository
+users:
+  -
+    user: mpardo
+    password: password
+  -
+    user: mpardo2
+    password: password2

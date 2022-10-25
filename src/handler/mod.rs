@@ -3,7 +3,8 @@ use std::io::Read;
 use rouille::{Request, Response};
 
 use crate::{Error, response_utils, Result};
-use crate::repo::RepoService;
+use crate::service::authentication::extract_authentication_info;
+use crate::service::repo::RepoService;
 
 mod get_artifact;
 mod get_metadata;
@@ -12,8 +13,17 @@ mod put_artifact;
 mod put_metadata;
 
 pub fn handle_put(request: &Request, repo: RepoService) -> Response {
-    let url = request.url();
-    if url.contains("maven-metadata.xml") { put_metadata::handle(request, repo) } else { put_artifact::handle(request, repo) }
+    match extract_authentication_info(request) {
+        Some(user) => {
+            if repo.authenticate(user).is_ok() {
+                let url = request.url();
+                if url.contains("maven-metadata.xml") { put_metadata::handle(request, repo) } else { put_artifact::handle(request, repo) }
+            } else {
+                response_utils::unauthorised()
+            }
+        }
+        None => response_utils::unauthorised(),
+    }
 }
 
 pub fn handle_get(request: &Request, repo: RepoService) -> Response {

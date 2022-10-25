@@ -1,7 +1,8 @@
 use rouille::{Request, Response};
 
 use crate::handler::handle_artifact_error;
-use crate::repo::RepoService;
+use crate::service::repo::RepoService;
+
 use crate::response_utils;
 
 pub fn handle(request: &Request, repo: RepoService) -> Response {

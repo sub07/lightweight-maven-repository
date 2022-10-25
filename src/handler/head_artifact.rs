@@ -2,7 +2,8 @@ use rouille::{Request, Response};
 
 use crate::response_utils;
 use crate::handler::handle_artifact_error;
-use crate::repo::RepoService;
+use crate::service::repo::RepoService;
+
 
 pub fn handle(request: &Request, repo: RepoService) -> Response {
     match repo.get_artifact_size(request.url()) {

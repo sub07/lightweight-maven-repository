@@ -50,6 +50,10 @@ pub fn internal_error() -> Response {
     with_code(500)
 }
 
+pub fn unauthorised() -> Response {
+    with_code(401)
+}
+
 #[inline]
 pub fn ok() -> Response {
     with_code(200)
